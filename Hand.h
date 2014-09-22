@@ -13,8 +13,10 @@ Description: The Hand class header file.
 class Hand
 {
 public:
-	void fillDeck();
-	//Adds a full deck of cards to the hand
+	Hand();
+	//Default constructor. An empty hand.
+	static Hand fullDeck();
+	//Returns a full deck of cards
 	void shuffle();
 	//Mixes up the cards
 	Card drawTop();

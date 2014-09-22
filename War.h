@@ -28,12 +28,17 @@ private:
 	static void getNames();
 	//Gets names for the two players from the user and stores them in nameP1 and nameP2
 	static void battle();
-	//Makes a comparison of one card from each player
+	//Precondition: Each player has at least one card in his hand.
+	//Postcondition: A comparison is made between the players' first cards. If the cards
+	// have the same value, a war is declared.
 	static void war();
 	//Puts 3 cards "facedown" for each player and compares the next card from each player
 	static void winner();
 	//Prints out a congratulatory message for the winner
+	static bool playAgain();
+	//Asks the user if he wants to play again. Returns true if the user wants to play again.
 	static string nameP1, nameP2;
+	static Hand deck, player1, player2;
 };
 
 #endif
