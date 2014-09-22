@@ -17,22 +17,33 @@ War::War() {/*intentionally empty*/}
 
 void War::play()
 {
-	//Init the deck and player hands
-	deck = Hand::fullDeck();
-	player1 = Hand::Hand();
-	player2 = Hand::Hand();
-	
 	introduction();
 	
 	do
 	{
+		//Init the deck and player hands
+		deck = Hand::fullDeck();
+		deck.shuffle();
+		player1 = Hand::Hand();
+		player2 = Hand::Hand();
+		
+		//Deal the cards out to the players
+		//A full deck has an even number of cards
+		while (!deck.empty())
+		{
+			player1.placeBottom(deck.drawTop());
+			player2.placeBottom(deck.drawTop());
+		}
+		
+		//Compare the cards until one player runs out of cards
 		while (!player1.empty() && !player2.empty())
 		{
 			battle();
 		}
 		
+		//Print a message for the winner
 		winner();
-	} while (playAgain());
+	} while (playAgain()); //Play again if the user asks
 }
 
 void War::introduction()
