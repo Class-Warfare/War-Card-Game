@@ -10,24 +10,30 @@ Description: The War class header file.
 
 #include "Hand.h"
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 class War
 {
 public:
-	void play();
+	static void play();
 	//Plays a game of war. Asks the user to press enter for each time,\
 	or to press -1 to zip through the rest of the game.
 private:
-	void introduction();
+	War();
+	//Default constructor
+	static void introduction();
 	//Prints out an introduction/instructions to the user
-	void getNames();
-	//Gets names for the two players
-	void battle();
+	static void getNames();
+	//Gets names for the two players from the user and stores them in nameP1 and nameP2
+	static void battle();
 	//Makes a comparison of one card from each player
-	void war();
-	//Puts 2/3 cards "facedown" and compares the next card from each player
-	void winner();
+	static void war();
+	//Puts 3 cards "facedown" for each player and compares the next card from each player
+	static void winner();
 	//Prints out a congratulatory message for the winner
+	static string nameP1, nameP2;
 };
 
 #endif

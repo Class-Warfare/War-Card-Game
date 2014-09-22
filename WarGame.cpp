@@ -9,8 +9,7 @@ Description: The gameplay file.
 
 int main()
 {
-  War::play();
+	War::play();
   
 	return 0;
 }
-
