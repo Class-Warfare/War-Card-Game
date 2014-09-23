@@ -31,8 +31,9 @@ private:
 	//Precondition: Each player has at least one card in his hand.
 	//Postcondition: A comparison is made between the players' first cards. If the cards
 	// have the same value, a war is declared.
-	static void war();
-	//Puts 3 cards "facedown" for each player and compares the next card from each player
+	static int war();
+	//Puts 3 cards "facedown" for each player and compares the next card from each player.
+	// Returns 1 if player one is the winner and 2 if player two is the winner.
 	static void winner();
 	//Prints out a congratulatory message for the winner
 	static bool playAgain();
