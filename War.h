@@ -44,6 +44,8 @@ private:
 	//Precondition: New information has been displayed for the user to see.
 	//Postcondition: Changes skipToEnd to reflect whether the user wants to skip to the end.
 	// of the game or just move to the next stage.
+	static void printCards(string p1Card, string p2Card);
+	//Prints out the names of the players, their current hand size, and the names of the cards.
 	static string nameP1, nameP2;
 	static Hand player1, player2;
 	static bool skipToEnd;

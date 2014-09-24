@@ -82,8 +82,7 @@ void War::battle()
 	Card p1Card = player1.drawTop();
 	Card p2Card = player2.drawTop();
 	
-	cout << nameP1 << ": " << p1Card.name() << endl
-		<< nameP2 << ": " << p2Card.name() << endl;
+	printCards(p1Card.name(), p2Card.name());
 	
 	if (p1Card.getValue() == p2Card.getValue())
 	{
@@ -124,14 +123,14 @@ void War::battle()
 
 int War::war()
 {
-	cout << "WAR!!" << endl;
-
 	Hand warPile;
 	Card p1Card, p2Card;
 	int winner = 0;
 
 	do
 	{
+		cout << "WAR!!" << endl;
+
 		if (!skipToEnd) checkForSkip();
 		
 		//If a player is out of cards, then the other player wins
@@ -162,8 +161,7 @@ int War::war()
 		warPile.placeBottom(p1Card);
 		warPile.placeBottom(p2Card);
 		
-		cout << nameP1 << ": " << p1Card.name() << endl
-			<< nameP2 << ": " << p2Card.name() << endl;
+		printCards(p1Card.name(), p2Card.name());
 	} while (p1Card.getValue() == p2Card.getValue());
 	
 	//Give the spoils to the winner
@@ -227,4 +225,12 @@ void War::checkForSkip()
 	cin.get(ans);
 	if (isalpha(ans)) skipToEnd = true;
 	else skipToEnd = false;
+}
+
+void War::printCards(string p1Card, string p2Card)
+{
+	//Print out the names, hand sizes, and card names
+	//Add one to the hand size to account for the cards already drawn
+	cout << nameP1 << "(" << player1.size()+1 << "): " << p1Card << endl
+		<< nameP2 << "(" << player2.size()+1 << "): " << p2Card << endl;
 }
