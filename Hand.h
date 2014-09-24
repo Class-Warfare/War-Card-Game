@@ -16,7 +16,7 @@ class Hand
 public:
 	Hand();
 	//Default constructor. An empty hand.
-	void fullDeck();
+	static Hand fullDeck();
 	//Returns a full deck of cards
 	void shuffle();
 	//Mixes up the cards

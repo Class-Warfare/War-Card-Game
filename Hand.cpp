@@ -16,45 +16,25 @@ Hand::Hand()
 {
 }
 
-void Hand::fullDeck()
+Hand Hand::fullDeck()
 {
-       const int DECK_NUMBER = 52;
-       size = DECK_NUMBER;
-       const int SUIT_TYPES = 4;
-       const int CARD_DENOMINATIONS;
-       Suit s = clubs;
-       Value v = deuce;
-       for (int i = 0; i < SUIT_TYPES; i++)
-       {
-              switch (i)
-              {
-                     case 0: s = clubs; break;
-                     case 1: s = diamonds; break;
-                     case 2: s = hearts; break;
-                     case 3: s = spades; break;
-              }
-              for (int i = 0; i < CARD_DENOMINATIONS; i++)
-              {
-                     switch (i)
-                     {
-                           case 0: v = deuce; break;
-                           case 1: v = trey; break;
-                           case 2: v = four; break;
-                           case 3: v = five; break;
-                           case 4: v = six; break;
-                           case 5: v = seven; break;
-                           case 6: v = eight; break;
-                           case 7: v = nine; break;
-                           case 8: v = ten; break;
-                           case 9: v = jack; break;
-                           case 10: v = queen; break;
-                           case 11: v = king; break;
-                           case 12: v = ace; break;
-                     }
-                     Card c(v,s);
-                     Hand.cards.push_back(c);
-              }
-       }
+	//Create a Hand with a full deck of cards
+	Hand deck;
+
+	const int NUM_SUITS = 4;
+	const int NUM_FACES = 13;
+	Suit suit[NUM_SUITS] = {clubs, diamonds, hearts, spades};
+	Value face[NUM_FACES] = {ace, deuce, trey, four, five, six, seven, eight, nine, ten, jack, queen, king};
+
+	for (int i = 0; i < NUM_SUITS; i++)
+	{
+		for (int j = 0; j < NUM_FACES; j++)
+		{
+			deck.placeBottom(Card(face[j], suit[i]));
+		}
+	}
+	
+	return deck;
 }
        
 void Hand::shuffle()
