@@ -6,9 +6,8 @@ Description: The Hand class definitions.
 */
 
 #include "Hand.h"
-#include <vector>
 #include <ctime>
-#include <random>
+#include <cstdlib>
 
 
 
@@ -51,6 +50,8 @@ void Hand::shuffle()
                      cards[card1] = cards[card2];
                      cards[card2] = c;
               }
+			  
+			  counter++;
        }
 }
 
@@ -59,26 +60,22 @@ Card Hand::drawTop()
 {
 	Card drawnCard=cards.at(0);
 	cards.erase(cards.begin());
-	size--;
-	return cards.at(0);
+	return drawnCard;
 }
+
 Card Hand::drawBottom()
 {
+	//Remove and return the last card
+	Card card = cards.back();
+	cards.erase(cards.end());
+	return card;
 }
+
 void Hand::placeTop(Card c)
 {
-       vector <Card> newHand;
-       newHand.push_back(c);
-       for (int i = 0; i < cards.size(); i++)
-              newHand.push_back(cards[i]);
-       for (int i = 0; i < cards.size() + 1; i++)
-       {
-              if (i == cards.size())
-                     cards.push_back(newHand[i]);
-              cards[i] = newHand[i];
-       }
+    //Insert the card at the beginning of the deck
+	cards.insert(cards.begin(), card);
 }
-       
 
 void Hand::placeBottom(Card c)
 {
@@ -87,10 +84,10 @@ void Hand::placeBottom(Card c)
 
 bool Hand::empty()
 {
-       return (size == 0);
+       return cards.empty();
 }
 
-int Hand::handSize()
+int Hand::size()
 {
-       return size;
+       return cards.size();
 }

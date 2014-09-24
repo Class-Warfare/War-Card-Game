@@ -11,6 +11,7 @@ Description: The Hand class header file.
 #include "Card.h"
 #include <vector>
 using std::vector;
+
 class Hand
 {
 public:
@@ -28,11 +29,10 @@ public:
 	//Places the card on the top or bottom of the hand
 	bool empty();
 	//Returns true if the hand is empty, returns false otherwise
-	int handSize();
+	int size();
 	//Returns how many cards are in the hand
 private:
 	vector<Card> cards;
-	int size;
 };
 
 #endif
