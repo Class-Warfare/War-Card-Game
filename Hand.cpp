@@ -74,7 +74,7 @@ Card Hand::drawBottom()
 void Hand::placeTop(Card c)
 {
     //Insert the card at the beginning of the deck
-	cards.insert(cards.begin(), c);
+	cards.insert(cards.begin(), card);
 }
 
 void Hand::placeBottom(Card c)
