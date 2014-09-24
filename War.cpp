@@ -8,22 +8,29 @@ Description: The War class definitions.
 #include "War.h"
 #include "Card.h"
 
+const int War::MAX_ROUNDS = 5000;
+
 string War::nameP1;
 string War::nameP2;
-Hand War::deck;
 Hand War::player1;
 Hand War::player2;
+bool War::skipToEnd = false;
+int War::rounds = 0;
 
 War::War() {/*intentionally empty*/}
 
 void War::play()
 {
+	getNames();
+
 	introduction();
 	
 	do
 	{
+		rounds = 0;
+		skipToEnd = false;
 		//Init the deck and player hands
-		deck = Hand::fullDeck();
+		Hand deck = Hand::fullDeck();
 		deck.shuffle();
 		player1 = Hand::Hand();
 		player2 = Hand::Hand();
@@ -40,6 +47,14 @@ void War::play()
 		while (!player1.empty() && !player2.empty())
 		{
 			battle();
+
+			if (rounds++ > MAX_ROUNDS)
+			{
+				cout << "This game of war appears to be infinite." << endl;
+				break;
+			}
+
+			if (!skipToEnd) checkForSkip();
 		}
 		
 		//Print a message for the winner
@@ -70,51 +85,66 @@ void War::battle()
 	cout << nameP1 << ": " << p1Card.name() << endl
 		<< nameP2 << ": " << p2Card.name() << endl;
 	
-	int winner = 0;
 	if (p1Card.getValue() == p2Card.getValue())
 	{
-		winner = war();
+		int winner = war();
+
+		//Give the spoils to the winner
+		if (winner == 1)
+		{
+			player1.placeBottom(p1Card);
+			player1.placeBottom(p2Card);
+			
+			cout << nameP1;
+		}
+		else if (winner == 2)
+		{
+			player2.placeBottom(p1Card);
+			player2.placeBottom(p2Card);
+			
+			cout << nameP2;
+		}
+		cout << " won the battle!" << endl;
 	}
-	else if (p1Card.getValue() > p2Card.getValue()) winner = 1;
-	else if (p2Card.getValue() > p1Card.getValue()) winner = 2;
-	
-	//Give the spoils to the winner
-	if (winner == 1)
+	else if (p1Card.getValue() > p2Card.getValue())
 	{
+		//Give the spoils to player 1
 		player1.placeBottom(p1Card);
 		player1.placeBottom(p2Card);
-		
-		cout << nameP1;
+		cout << nameP1 << " won this round." << endl;
 	}
-	else if (winner == 2)
+	else if (p2Card.getValue() > p1Card.getValue())
 	{
+		//Give the spoils to player 2
 		player2.placeBottom(p1Card);
 		player2.placeBottom(p2Card);
-		
-		cout << nameP2;
+		cout << nameP2 << " won this round." << endl;
 	}
-	cout << " won this round." << endl;
 }
 
 int War::war()
 {
+	cout << "WAR!!" << endl;
+
 	Hand warPile;
 	Card p1Card, p2Card;
 	int winner = 0;
 	//If a player is out of cards, then the other player wins
 	if (player1.empty())
 	{
+		cout << nameP1 << " is out of cards." << endl;
 		winner = 2;
 	}
 	else if (player2.empty())
 	{
+		cout << nameP2 << " is out of cards." << endl;
 		winner = 1;
 	}
 	else
 	{
 		do
 		{
-			cout << "WAR!!" << endl;
+			if (!skipToEnd) checkForSkip();
 			
 			//Put down three extra cards for each player
 			for (int i = 0; i < 3; i++)
@@ -135,7 +165,8 @@ int War::war()
 		//Give the spoils to the winner
 		if (p1Card.getValue() > p2Card.getValue())
 		{
-			for (int i = 0; i < warPile.size(); i++)
+			int pile_size = warPile.size();
+			for (int i = 0; i < pile_size; i++)
 				player1.placeBottom(warPile.drawTop());
 			player1.placeBottom(p1Card);
 			player1.placeBottom(p2Card);
@@ -144,7 +175,8 @@ int War::war()
 		}
 		else if (p2Card.getValue() > p1Card.getValue())
 		{
-			for (int i = 0; i < warPile.size(); i++)
+			int pile_size = warPile.size();
+			for (int i = 0; i < pile_size; i++)
 				player2.placeBottom(warPile.drawTop());
 			player2.placeBottom(p1Card);
 			player2.placeBottom(p2Card);
@@ -174,10 +206,20 @@ void War::winner()
 
 bool War::playAgain()
 {
+	cin.sync();
 	char ans;
 	cout << "Do you want to play again (y/n)?: ";
 	cin >> ans;
 	cin.sync();
 	
 	return (ans == 'Y' || ans == 'y');
+}
+
+void War::checkForSkip()
+{
+	cin.sync();
+	char ans;
+	cin.get(ans);
+	if (isalpha(ans)) skipToEnd = true;
+	else skipToEnd = false;
 }

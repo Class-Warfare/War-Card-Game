@@ -18,8 +18,9 @@ class War
 {
 public:
 	static void play();
-	//Plays a game of war. Asks the user to press enter for each time,\
-	or to press -1 to zip through the rest of the game.
+	//Plays a game of war. Asks the user to press enter for each time,
+	// or enter a letter to zip through the rest of the game. Nobody wins
+	// if a game continues for more than MAX_ROUNDS (presumed to be an infinite game).
 private:
 	War();
 	//Default constructor
@@ -35,11 +36,19 @@ private:
 	//Puts 3 cards "facedown" for each player and compares the next card from each player.
 	// Returns 1 if player one is the winner and 2 if player two is the winner.
 	static void winner();
-	//Prints out a congratulatory message for the winner.
+	//Precondition: One of the players has run out of cards or rounds is greater than MAX_ROUNDS.
+	//Postcondition: Prints out a congratulatory message for the winner.
 	static bool playAgain();
 	//Asks the user if he wants to play again. Returns true if the user wants to play again.
+	static void checkForSkip();
+	//Precondition: New information has been displayed for the user to see.
+	//Postcondition: Changes skipToEnd to reflect whether the user wants to skip to the end
+	// of the game or just move to the next stage.
 	static string nameP1, nameP2;
-	static Hand deck, player1, player2;
+	static Hand player1, player2;
+	static bool skipToEnd;
+	static int rounds;
+	static const int MAX_ROUNDS;
 };
 
 #endif
