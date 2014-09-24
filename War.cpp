@@ -15,7 +15,7 @@ string War::nameP2;
 Hand War::player1;
 Hand War::player2;
 bool War::skipToEnd = false;
-int War::rounds = 0;
+int War::rounds = 1;
 
 War::War() {/*intentionally empty*/}
 
