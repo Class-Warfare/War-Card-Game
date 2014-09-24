@@ -32,27 +32,27 @@ Hand Hand::fullDeck()
 			deck.placeBottom(Card(face[j], suit[i]));
 		}
 	}
-	
+
 	return deck;
 }
-       
+
 void Hand::shuffle()
 {
-       srand(time(NULL));
-       int card1 = rand() % 52;
-       int card2 = rand() % 52;
-       int counter = 0;
-       while (counter < 1000)
-       {
-              if (card1 != card2)
-              {
-                     Card c = cards[card1];
-                     cards[card1] = cards[card2];
-                     cards[card2] = c;
-              }
-			  
-			  counter++;
-       }
+	srand(time(NULL));
+	int counter = 0;
+	while (counter < 1000)
+	{
+		int card1 = rand() % cards.size();
+		int card2 = rand() % cards.size();
+		if (card1 != card2)
+		{
+			Card c = cards[card1];
+			cards[card1] = cards[card2];
+			cards[card2] = c;
+		}
+
+		counter++;
+	}
 }
 
 
@@ -73,21 +73,21 @@ Card Hand::drawBottom()
 
 void Hand::placeTop(Card c)
 {
-    //Insert the card at the beginning of the deck
+	//Insert the card at the beginning of the deck
 	cards.insert(cards.begin(), c);
 }
 
 void Hand::placeBottom(Card c)
 {
-       cards.push_back(c);
+	cards.push_back(c);
 }
 
 bool Hand::empty()
 {
-       return cards.empty();
+	return cards.empty();
 }
 
 int Hand::size()
 {
-       return cards.size();
+	return cards.size();
 }
