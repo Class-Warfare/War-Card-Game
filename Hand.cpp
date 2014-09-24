@@ -38,20 +38,13 @@ Hand Hand::fullDeck()
 
 void Hand::shuffle()
 {
-	srand(time(NULL));
-	int counter = 0;
-	while (counter < 1000)
+	srand(time(0) + size());
+	//Select a new random location for each card
+	for (int i = 0; i < size(); i++)
 	{
-		int card1 = rand() % cards.size();
-		int card2 = rand() % cards.size();
-		if (card1 != card2)
-		{
-			Card c = cards[card1];
-			cards[card1] = cards[card2];
-			cards[card2] = c;
-		}
-
-		counter++;
+		int newIndex = rand()%size();
+		cards.insert(cards.begin() + newIndex, cards.at(i));
+		cards.erase(cards.begin() + i);
 	}
 }
 
