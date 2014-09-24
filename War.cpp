@@ -129,62 +129,61 @@ int War::war()
 	Hand warPile;
 	Card p1Card, p2Card;
 	int winner = 0;
-	//If a player is out of cards, then the other player wins
-	if (player1.empty())
+
+	do
 	{
-		cout << nameP1 << " is out of cards." << endl;
-		winner = 2;
-	}
-	else if (player2.empty())
+		if (!skipToEnd) checkForSkip();
+		
+		//If a player is out of cards, then the other player wins
+		if (player1.empty())
+		{
+			cout << nameP1 << " is out of cards." << endl;
+			winner = 2;
+			break;
+		}
+		else if (player2.empty())
+		{
+			cout << nameP2 << " is out of cards." << endl;
+			winner = 1;
+			break;
+		}
+
+		//Put down three extra cards for each player
+		for (int i = 0; i < 3; i++)
+		{
+			//Save one card for the comparison
+			if (player1.size() > 1) warPile.placeBottom(player1.drawTop());
+			if (player2.size() > 1) warPile.placeBottom(player2.drawTop());
+		}
+		
+		//We'll compare the next two cards
+		p1Card = player1.drawTop();
+		p2Card = player2.drawTop();
+		warPile.placeBottom(p1Card);
+		warPile.placeBottom(p2Card);
+		
+		cout << nameP1 << ": " << p1Card.name() << endl
+			<< nameP2 << ": " << p2Card.name() << endl;
+	} while (p1Card.getValue() == p2Card.getValue());
+	
+	//Give the spoils to the winner
+	if (p1Card.getValue() > p2Card.getValue() || winner == 1)
 	{
-		cout << nameP2 << " is out of cards." << endl;
+		int pile_size = warPile.size();
+		for (int i = 0; i < pile_size; i++)
+			player1.placeBottom(warPile.drawTop());
+		
 		winner = 1;
 	}
-	else
+	else if (p2Card.getValue() > p1Card.getValue() || winner == 2)
 	{
-		do
-		{
-			if (!skipToEnd) checkForSkip();
-			
-			//Put down three extra cards for each player
-			for (int i = 0; i < 3; i++)
-			{
-				//Save one card for the comparison
-				if (player1.size() > 1) warPile.placeBottom(player1.drawTop());
-				if (player2.size() > 1) warPile.placeBottom(player2.drawTop());
-			}
-			
-			//We'll compare the next two cards
-			p1Card = player1.drawTop();
-			p2Card = player2.drawTop();
-			
-			cout << nameP1 << ": " << p1Card.name() << endl
-				<< nameP2 << ": " << p2Card.name() << endl;
-		} while (p1Card.getValue() == p2Card.getValue());
+		int pile_size = warPile.size();
+		for (int i = 0; i < pile_size; i++)
+			player2.placeBottom(warPile.drawTop());
 		
-		//Give the spoils to the winner
-		if (p1Card.getValue() > p2Card.getValue())
-		{
-			int pile_size = warPile.size();
-			for (int i = 0; i < pile_size; i++)
-				player1.placeBottom(warPile.drawTop());
-			player1.placeBottom(p1Card);
-			player1.placeBottom(p2Card);
-			
-			winner = 1;
-		}
-		else if (p2Card.getValue() > p1Card.getValue())
-		{
-			int pile_size = warPile.size();
-			for (int i = 0; i < pile_size; i++)
-				player2.placeBottom(warPile.drawTop());
-			player2.placeBottom(p1Card);
-			player2.placeBottom(p2Card);
-			
-			winner = 2;
-		}
+		winner = 2;
 	}
-		
+
 	return winner;
 }
 
