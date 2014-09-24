@@ -49,12 +49,17 @@ void War::play()
 
 void War::introduction()
 {
-	
+	cout << "Welcome to the card game War. This is a one or two player game." << endl;
+	cout << "Press Enter to take your turn, or input a letter to skip to the end." << endl << endl;
 }
 
 void War::getNames()
 {
-	
+	cout << "Enter the name of player 1: ";
+	getline(cin, nameP1);
+	cout << endl << "Enter the name of player 2: ";
+	getline(cin, nameP2);
+	cout << endl;
 }
 
 void War::battle()
@@ -153,7 +158,18 @@ int War::war()
 
 void War::winner()
 {
-	
+	cout << "Congratulations, ";
+
+	if (player1.empty())
+	{
+		cout << nameP2;
+	}
+	else //If player2.empty()
+	{
+		cout << nameP1;
+	}
+
+	cout << ", you have won the war!" << endl;
 }
 
 bool War::playAgain()
