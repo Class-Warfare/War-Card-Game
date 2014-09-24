@@ -24,9 +24,9 @@ private:
 	War();
 	//Default constructor
 	static void introduction();
-	//Prints out an introduction/instructions to the user
+	//Prints out an introduction and tells the user how to play.
 	static void getNames();
-	//Gets names for the two players from the user and stores them in nameP1 and nameP2
+	//Gets names for the two players from the user and stores them in nameP1 and nameP2.
 	static void battle();
 	//Precondition: Each player has at least one card in his hand.
 	//Postcondition: A comparison is made between the players' first cards. If the cards
@@ -35,7 +35,7 @@ private:
 	//Puts 3 cards "facedown" for each player and compares the next card from each player.
 	// Returns 1 if player one is the winner and 2 if player two is the winner.
 	static void winner();
-	//Prints out a congratulatory message for the winner
+	//Prints out a congratulatory message for the winner.
 	static bool playAgain();
 	//Asks the user if he wants to play again. Returns true if the user wants to play again.
 	static string nameP1, nameP2;
