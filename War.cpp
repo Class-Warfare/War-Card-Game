@@ -27,7 +27,7 @@ void War::play()
 	
 	do
 	{
-		rounds = 0;
+		rounds = 1;
 		skipToEnd = false;
 		//Init the deck and player hands
 		Hand deck = Hand::fullDeck();
@@ -48,9 +48,9 @@ void War::play()
 		{
 			battle();
 
-			if (rounds++ > MAX_ROUNDS)
+			if (++rounds > MAX_ROUNDS)
 			{
-				cout << "This game of war appears to be infinite." << endl;
+				cout << "This game of War appears to be infinite." << endl;
 				break;
 			}
 
@@ -190,18 +190,24 @@ int War::war()
 
 void War::winner()
 {
-	cout << "Congratulations, ";
-
-	if (player1.empty())
+	//Check if an infinite loop scenario has occurred.
+	if (rounds > MAX_ROUNDS)
 	{
-		cout << nameP2;
+		cout << "The war ends in a draw." << endl << endl;
 	}
-	else //If player2.empty()
+	else
 	{
-		cout << nameP1;
+		cout << "Congratulations, ";
+		if (player1.empty())
+		{
+			cout << nameP2;
+		}
+		else //If player2.empty()
+		{
+			cout << nameP1;
+		}
+		cout << ", you have won the war!" << endl << endl;
 	}
-
-	cout << ", you have won the war!" << endl;
 }
 
 bool War::playAgain()
